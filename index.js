@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 3000;
 
 // Multer setup
 const storage = multer.diskStorage({
-  destination: './uploads/',
+  destination: path.join(__dirname, 'uploads'),
   filename: (req, file, cb) => {
     cb(null, file.originalname);
   },
@@ -24,7 +24,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-  fs.readdir('./uploads', (err, files) => {
+  fs.readdir('/app/uploads/', (err, files) => {
     if (err) throw err;
     res.sendFile(path.join(__dirname, 'index.html'));
   });
@@ -56,12 +56,12 @@ const TOTAL_SPACE = process.env.TOTAL_SPACE || "512MB";
 const totalSpace = spaceStringToBytes(TOTAL_SPACE);
 
 app.get('/files', (req, res) => {
-  fs.readdir('./uploads', (err, filenames) => {
+  fs.readdir(path.join(__dirname, 'uploads'), (err, filenames) => {
     if (err) throw err;
 
     let usedSpace = 0;
     const filesWithDetails = filenames.map(filename => {
-      const filePath = path.join('./uploads', filename);
+      const filePath = path.join(path.join(__dirname, 'uploads'), filename);
       const stats = fs.statSync(filePath);
       usedSpace += stats.size;
       return {
@@ -82,6 +82,7 @@ app.get('/files', (req, res) => {
 });
 
 app.post('/upload', upload.single('file'), (req, res) => {
+  console.log(path.join(__dirname, 'uploads'))
   if (req.file.size > maxFileSize) {
     fs.unlinkSync(req.file.path);  // delete the uploaded file
     return res.status(413).send('File exceeds the maximum allowed size.');
