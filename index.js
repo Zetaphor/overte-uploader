@@ -60,7 +60,8 @@ app.get('/files', (req, res) => {
     if (err) throw err;
 
     let usedSpace = 0;
-    const filesWithDetails = filenames.map(filename => {
+    const filteredFilenames = filenames.filter(filename => filename !== '.gitkeep');
+    const filesWithDetails = filteredFilenames.map(filename => {
       const filePath = path.join(path.join(__dirname, 'uploads'), filename);
       const stats = fs.statSync(filePath);
       usedSpace += stats.size;
