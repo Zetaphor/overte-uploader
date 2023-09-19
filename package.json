@@ -2,10 +2,10 @@
   "name": "overte-uploader",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "build": "tailwindcss -i tailwind.css -o static/styles.css",
-    "start": "node index.js"
+    "start": "node server.js"
   },
   "author": "",
   "license": "Apache-2.0",

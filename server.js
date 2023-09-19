@@ -9,7 +9,14 @@ const app = express();
 app.use(express.static('static'));
 const PORT = process.env.PORT || 3000;
 
-// Multer setup
+app.use((req, res, next) => {
+  const referer = req.headers.referer || '';
+  if (referer.includes('overte-uploader.glitch.me')) {
+    return res.status(403).send('Forbidden');
+  }
+  next();
+});
+
 const storage = multer.diskStorage({
   destination: path.join(__dirname, 'uploads'),
   filename: (req, file, cb) => {
@@ -83,7 +90,6 @@ app.get('/files', (req, res) => {
 });
 
 app.post('/upload', upload.single('file'), (req, res) => {
-  console.log(path.join(__dirname, 'uploads'))
   if (req.file.size > maxFileSize) {
     fs.unlinkSync(req.file.path);  // delete the uploaded file
     return res.status(413).send('File exceeds the maximum allowed size.');
