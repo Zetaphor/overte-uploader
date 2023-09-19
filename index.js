@@ -24,7 +24,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-  fs.readdir('/app/uploads/', (err, files) => {
+  fs.readdir(path.join(__dirname, 'uploads'), (err, files) => {
     if (err) throw err;
     res.sendFile(path.join(__dirname, 'index.html'));
   });
