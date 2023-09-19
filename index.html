@@ -13,6 +13,7 @@
   <h1 class="w-full text-center text-2xl font-bold mb-5">Overte File Manager</h1>
   <div class="container mx-auto px-3 max-w-5xl">
     <p>This is a simple file manager intended to be hosted on Glitch.com. Using this application you can upload files for use in Overte.</p>
+    <p>Note that due to a limitation of Glitch, files uploaded via this tool will not appear in the file or asset browser on Glitch.com!</p>
     <p>This tool makes no attempt at privacy or obscuring the download link. Anyone with the URL to this page will be able to see these files. Use at your own risk. If you require a more secure means of hosting files, consider looking into setting up a self-hosted server or using a cloud sharing platform.</p>
   </div>
   <div class="container mx-auto mt-5">
@@ -61,15 +62,6 @@
 
   <script>
     let maxFileSize = null;
-
-    document.getElementById('accordionButton').addEventListener('click', function () {
-      const content = document.getElementById('accordionContent');
-      if (content.classList.contains('hidden')) {
-        content.classList.remove('hidden');
-      } else {
-        content.classList.add('hidden');
-      }
-    });
 
     async function fetchFiles() {
       const response = await fetch('/files');
@@ -169,7 +161,7 @@
       }
     });
 
-    fetchFiles();
+    window.onload = fetchFiles();
   </script>
 </body>
 
