@@ -17,15 +17,17 @@
     <p>This is a simple file manager intended to be hosted on Glitch.com. Using this application you can upload files for use in Overte.</p>
     <p>Note that due to a limitation of Glitch, files uploaded via this tool will not appear in the file or asset browser on Glitch.com!</p>
     <p>This tool makes no attempt at privacy or obscuring the download link. Anyone with the URL to this page will be able to see these files. Use at your own risk. If you require a more secure means of hosting files, consider looking into setting up a self-hosted server or using a cloud sharing platform.</p>
-    <div class="mt-3">
-      <p><a href="https://glitch.com/edit/#!/remix/overte-uploader"><img src="https://cdn.glitch.com/2703baf2-b643-4da7-ab91-7ee2a2d00b5b%2Fremix-button-v2.svg" alt="Remix on Glitch" /></a></p>
+    <div id="remixDisplay" class="mt-3 font-bold">
+      <p>Uploads are disabled on this projects Glitch homepage.</p>
+      <p>Use the button below to create your own copy!</p>
+      <p class="mt-3"><a href="https://glitch.com/edit/#!/remix/overte-uploader"><img src="https://cdn.glitch.com/2703baf2-b643-4da7-ab91-7ee2a2d00b5b%2Fremix-button-v2.svg" alt="Remix on Glitch" /></a></p>
     </div>
   </div>
   <div class="container mx-auto mt-5">
     <div class="mt-6 mb-6">
       <form action="/upload" method="post" enctype="multipart/form-data" id="uploadForm">
         <input type="file" name="file" required>
-        <button type="submit" class="ml-4 px-4 py-2 bg-blue-500 text-white rounded">Upload</button>
+        <button id="btnUpload" type="submit" class="ml-4 px-4 py-2 bg-blue-500 text-white rounded">Upload</button>
       </form>
     </div>
 
@@ -167,6 +169,12 @@
     });
 
     window.onload = fetchFiles();
+
+    if (window.location == 'https://overte-uploader.glitch.me/') {
+      document.getElementById('uploadForm').style.display = 'none';
+    } else {
+      document.getElementById('remixDisplay').style.display = 'none';
+    }
   </script>
 </body>
 
