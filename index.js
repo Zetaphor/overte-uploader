@@ -87,7 +87,7 @@ app.post('/upload', upload.single('file'), (req, res) => {
     return res.status(413).send('File exceeds the maximum allowed size.');
   }
 
-  res.send('File uploaded!');
+  res.redirect('/');
 });
 
 
